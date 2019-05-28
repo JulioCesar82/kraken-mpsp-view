@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'SeasonFourteen';
+  src: url('../fonts/seasonfourteen/SeasonFourteen.eot');
+  src: url('../fonts/seasonfourteen/SeasonFourteen.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/seasonfourteen/SeasonFourteen.svg#SeasonFourteen') format('svg'),
+       url('../fonts/seasonfourteen/SeasonFourteen.ttf') format('truetype'),
+       url('../fonts/seasonfourteen/SeasonFourteen.woff') format('woff'),
+       url('../fonts/seasonfourteen/SeasonFourteen.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+

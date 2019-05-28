@@ -1,0 +1,10 @@
+theme name 
+Jobpply
+
+download 
+https://colorlib.com/wp/template/jobpply/
+
+references
+https://www.tutorialrepublic.com/snippets/gallery.php
+https://bootsnipp.com
+https://startbootstrap.com/snippets/
