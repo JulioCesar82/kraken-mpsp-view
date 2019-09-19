@@ -1,8 +1,10 @@
 import React from "react";
-import { StyleSheet, Image } from "react-native";
-import { createBottomTabNavigator } from "react-navigation";
+import { StyleSheet } from "react-native";
+import { createBottomTabNavigator } from "react-navigation-tabs";
 
 import { ShowCaseStack, OptionsStack } from "./AppRoutes";
+
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const TabRoutes = createBottomTabNavigator(
   {
@@ -10,12 +12,7 @@ const TabRoutes = createBottomTabNavigator(
       screen: ShowCaseStack,
       navigationOptions: {
         tabBarIcon: ({ focused, horizontal, tintColor }) => (
-          <Image
-            source={{
-                uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5Sd6kPUaHaKIXYxRmcZkXgYaDWro_kmIr2sKnjvFaFgfqWIaN"
-            }}
-            style={[styles.icon, { tintColor: tintColor }]}
-          />
+         <Icon name="home" size={30} color="#900" />
         )
       }
     },
@@ -23,12 +20,7 @@ const TabRoutes = createBottomTabNavigator(
       screen: OptionsStack,
       navigationOptions: {
         tabBarIcon: ({ focused, horizontal, tintColor }) => (
-          <Image
-            source={{
-                uri: "https://cdn4.iconfinder.com/data/icons/glyph-ui-icons-part-2/22/menu-512.png"
-            }}
-            style={[styles.icon, { tintColor: tintColor }]}
-          />
+         <Icon name="bars" size={30} color="#900" />
         )
       }
     }
@@ -43,10 +35,7 @@ const TabRoutes = createBottomTabNavigator(
       tabBarOptions: {
         showIcon: true,
         showLabel: false,
-        style: {
-          backgroundColor: "black",
-          height: 55
-        },
+        style: styles.tab,
         activeTintColor: "green",
         inactiveTintColor: "white"
       }
@@ -55,19 +44,15 @@ const TabRoutes = createBottomTabNavigator(
 );
 
 const styles = StyleSheet.create({
+  tab: {
+    backgroundColor: "gray",
+    height: 55
+  },
   icon: {
     width: 20,
     height: 20,
     padding: 10
   },
-  containerCenter: {
-    backgroundColor: "blue",
-    borderWidth: 5,
-    borderRadius: 50,
-    borderColor: "black",
-    marginTop: -20,
-    padding: 10
-  }
 });
 
 export default TabRoutes;

@@ -40,10 +40,6 @@ export default class LoadingScreen extends Component {
                     <Text>ir para Login</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigate("Home")}>
-                    <Text>ir para Home</Text>
-                </TouchableOpacity>
-
                 <TouchableOpacity onPress={() => navigate("ProfileRegister")}>
                     <Text>ir para ProfileRegister</Text>
                 </TouchableOpacity>

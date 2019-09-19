@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import styles from "./styles";
+import "./styles.css";
 
 export default class ContactScreen extends Component {
 

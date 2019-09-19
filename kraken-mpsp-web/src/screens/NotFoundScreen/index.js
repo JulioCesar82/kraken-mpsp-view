@@ -2,12 +2,12 @@ import React, { Component } from "react";
 
 import "./styles.css";
 
-export default class OptionsScreen extends Component {
+export default class NotFoundScreen extends Component {
 
     render() {
         return(
             <div>
-                <h1>Página OptionsScreen</h1>
+                <h1>Página NotFoundScreen</h1>
             </div>
         );
     }

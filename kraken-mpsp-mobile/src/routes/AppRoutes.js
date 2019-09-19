@@ -1,12 +1,12 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 
-import ShowCaseScreen from "./Screens/ShowCaseScreen";
-import SearchScreen from "./Screens/SearchScreen";
+import ShowCaseScreen from "../screens/ShowCaseScreen";
+import SearchScreen from "../screens/SearchScreen";
 
-import OptionsScreen from "./Screens/OptionsScreen";
-import ProfileScreen from "./Screens/ProfileScreen";
-import ContactScreen from "./Screens/ContactScreen";
-import TermsScreen from "./Screens/TermsScreen";
+import OptionsScreen from "../screens/OptionsScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import ContactScreen from "../screens/ContactScreen";
+import TermsScreen from "../screens/TermsScreen";
 
 /**
 navigationOptions: {
@@ -22,7 +22,7 @@ export const ShowCaseStack = createStackNavigator({
     screen: ShowCaseScreen,
     navigationOptions: {
       title: "Início",
-      header: null
+      //header: null
     }
   },
   Search: {
@@ -59,7 +59,7 @@ export const OptionsStack = createStackNavigator({
     }
   }
 });
-
+/*
 OptionsStack.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
   if (navigation.state.index > 0) {
@@ -70,3 +70,4 @@ OptionsStack.navigationOptions = ({ navigation }) => {
     tabBarVisible
   };
 };
+*/

@@ -1,10 +1,10 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 
-import SignInScreen from "./Screens/SignInScreen";
-import ProfileRegisterScreen from "./Screens/ProfileRegisterScreen";
+import SignInScreen from "../screens/SignInScreen";
+import ProfileRegisterScreen from "../screens/ProfileRegisterScreen";
 
-import ContactScreen from "./Screens/ContactScreen";
-import TermsScreen from "./Screens/TermsScreen";
+import ContactScreen from "../screens/ContactScreen";
+import TermsScreen from "../screens/TermsScreen";
 
 const SignedOutRoutes = createStackNavigator({
   Login: {
