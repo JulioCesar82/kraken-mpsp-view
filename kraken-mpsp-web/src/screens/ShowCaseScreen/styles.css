@@ -1,4 +1,42 @@
-
+/* ** TEMPLATE ** */
 .body {
-    background-color: "white";
+    margin: 10px;
+}
+
+.logoIcon {
+    font-family: SeasonFourteen;
+}
+
+/* ** PAGE ** */
+.ilustrationContainer {
+    width: 50%;
+    position: relative;
+    top: 50px;
+    right: 50px;
+    position: absolute;
+    z-index: -1;
+}
+
+/* box de informacoes */
+.infoContainer {
+    width: 50%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.titleInfoContainer {
+    font-size: 60px;
+    color: #000000;
+    line-height: 1.2;
+    font-weight: 900;
+}
+
+.descInfoContainer {
+
+}
+
+
+/* box de forms */
+.formContainer {
+    width: 50%;
 }
