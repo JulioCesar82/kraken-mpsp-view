@@ -20,9 +20,11 @@ export default class ShowCaseScreen extends Component {
     //if (form.checkValidity() === false) {
     //}
     console.log("JULIO handleSubmit", form);
-    fetch('flowers.jpg').then(response => {
+    const apiEndPoint = 'http://localhost:8784/api';
+    fetch(`${apiEndPoint}/PhysicalPerson`).then(async (response) => {
       if(response.ok) {
-        var data = response.blob();
+
+        var data = await response.blob();
         console.log("JULIO RETORNO API", data);
         return data;
       } else {
