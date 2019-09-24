@@ -1,55 +1,41 @@
 import React, { Component } from "react";
 
 import { Nav, Tabs, Tab, Form, Button, Navbar } from "react-bootstrap";
+import { Formik } from "formik";
+import * as yup from "yup";
 
 import "./styles.css";
+
+const legalSchema = yup.object().shape({
+  cnpj: yup
+    .string()
+    .required("Informe o CNPJ")
+    .min(4, "Preencha o CNPJ correto")
+});
 
 export default class ShowCaseScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formSelected: "buscaPessoa",
-      validated: false
+      formSelected: "buscaPessoa"
     };
   }
 
-  onSubmitPhysicalPerson = event => {
-    event.preventDefault();
-    event.stopPropagation();
-    const form = event.currentTarget;
-    //if (form.checkValidity() === false) {
-    //}
-    console.log("JULIO onSubmitPhysicalPerson", form);
-    const apiEndPoint = 'http://localhost:8784/api';
-    fetch(`${apiEndPoint}/PhysicalPerson`).then(async (response) => {
-      if(response.ok) {
+  onSubmitLegalPerson = values => {
+    console.log("JULIO onSubmitLegalPerson", values);
+    const apiEndPoint = "http://localhost:8784/api";
 
+    fetch(`${apiEndPoint}/LegalPerson`,  {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(values)
+    }).then(async (response) => {
+      if(response.ok) {
         var data = await response.blob();
         console.log("JULIO RETORNO API", data);
-        return data;
-      } else {
-        console.log('Network response was not ok.');
-      }
-    })
-    .catch(error => {
-      console.log('There has been a problem with your fetch operation: ' + error.message);
-    });
-  };
-
-  onSubmitLegalPerson = event => {
-    event.preventDefault();
-    event.stopPropagation();
-    const form = event.currentTarget;
-    //if (form.checkValidity() === false) {
-    //}
-    console.log("JULIO onSubmitLegalPerson", form);
-    const apiEndPoint = 'http://localhost:8784/api';
-    fetch(`${apiEndPoint}/LegalPerson`).then(async (response) => {
-      if(response.ok) {
-
-        var data = await response.blob();
-        console.log("JULIO RETORNO API", data);
-        return data;
       } else {
         console.log('Network response was not ok.');
       }
@@ -60,7 +46,7 @@ export default class ShowCaseScreen extends Component {
   };
 
   render() {
-    const { formSelected, validated } = this.state;
+    const { formSelected } = this.state;
     return (
       <div className="body">
         <img
@@ -97,43 +83,80 @@ export default class ShowCaseScreen extends Component {
         </div>
 
         <div className="formContainer">
-        
-        <Tabs
-          id="search-forms"
-          activeKey={formSelected}
-          onSelect={selected => this.setState({ formSelected: selected })}          
-        >
-          <Tab eventKey="buscaPessoa" title="Buscar pessoa">
-            <Form noValidate validated={validated} onSubmit={this.onSubmitPhysicalPerson}>
-              <Form.Control type="nome" placeholder="Informe o nome completo" />
-              <Form.Control type="cpf" placeholder="Informe o CPF" />
-              <Form.Control type="rg" placeholder="Informe o RG" />
-              <Form.Control
-                type="dataNascimento"
-                placeholder="Informe a data de nascimento"
-              />
-              <Form.Control
-                type="nomeMae"
-                placeholder="Informe o nome da mãe"
-              />
+          <Tabs
+            id="search-forms"
+            activeKey={formSelected}
+            onSelect={selected => this.setState({ formSelected: selected })}
+          >
+            <Tab eventKey="buscaPessoa" title="Buscar pessoa">
+              <div>asdsada</div>
+            </Tab>
+            <Tab eventKey="buscaEmpresa" title="buscar Empresa">
+            <Formik
+                initialValues={{
+                  CNPJ: "",
+                  NomeFantasia: "BANCO SAFRAAA",
+                  CNPJ: "12312312312312",
+                  CPFDoFundador: "333333333",
+                  Contador: "11111111"
+                }}
+                enableReinitialize={true}
+                onSubmit={values => this.onSubmitLegalPerson(values)}
+                validationSchema={legalSchema}
+              >
+                {props => {
+                  const {
+                    values,
+                    touched,
+                    errors,
+                    dirty,
+                    isSubmitting,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    handleReset,
+                    isValid,
+                    submitForm
+                  } = props;
+                  return (
+                    <form onSubmit={handleSubmit}>
+                      <input
+                        name="cnpj"
+                        onChange={handleChange("cnpj")}
+                        onBlur={handleBlur("cnpj")}
+                        value={values.cnpj}
+                        className={
+                          errors.cnpj && touched.cnpj ? 'text-input error' : 'text-input'
+                        }
+                      />
+                      {errors.cnpj && touched.cnpj && (
+                        <div className="input-feedback">{errors.cnpj}</div>
+                      )}
 
-              <Button variant="primary" type="submit">
-                Iniciar procura
-              </Button>
-            </Form>
-          </Tab>
-          <Tab eventKey="buscaEmpresa" title="buscar Empresa">
-            <Form noValidate validated={validated} onSubmit={this.onSubmitLegalPerson}>
-              <Form.Control type="cnpj" placeholder="Informe o CNPJ" />
-              <Button variant="primary" type="submit">
-                Iniciar procura
-              </Button>
-            </Form>
-          </Tab>
-        </Tabs>
 
+                      <Button
+                        variant="primary"
+                        type="button"
+                        onClick={handleReset}
+                        disabled={!dirty || isSubmitting}
+                      >
+                        Limpar campos
+                      </Button>
+
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        disabled={!isValid || isSubmitting}
+                      >
+                        Iniciar procura
+                      </Button>
+                    </form>
+                  );
+                }}
+              </Formik>
+            </Tab>
+          </Tabs>
         </div>
-        
       </div>
     );
   }
