@@ -13,13 +13,13 @@ export default class ShowCaseScreen extends Component {
     };
   }
 
-  handleSubmit = event => {
+  onSubmitPhysicalPerson = event => {
     event.preventDefault();
     event.stopPropagation();
     const form = event.currentTarget;
     //if (form.checkValidity() === false) {
     //}
-    console.log("JULIO handleSubmit", form);
+    console.log("JULIO onSubmitPhysicalPerson", form);
     const apiEndPoint = 'http://localhost:8784/api';
     fetch(`${apiEndPoint}/PhysicalPerson`).then(async (response) => {
       if(response.ok) {
@@ -36,6 +36,28 @@ export default class ShowCaseScreen extends Component {
     });
   };
 
+  onSubmitLegalPerson = event => {
+    event.preventDefault();
+    event.stopPropagation();
+    const form = event.currentTarget;
+    //if (form.checkValidity() === false) {
+    //}
+    console.log("JULIO onSubmitLegalPerson", form);
+    const apiEndPoint = 'http://localhost:8784/api';
+    fetch(`${apiEndPoint}/LegalPerson`).then(async (response) => {
+      if(response.ok) {
+
+        var data = await response.blob();
+        console.log("JULIO RETORNO API", data);
+        return data;
+      } else {
+        console.log('Network response was not ok.');
+      }
+    })
+    .catch(error => {
+      console.log('There has been a problem with your fetch operation: ' + error.message);
+    });
+  };
 
   render() {
     const { formSelected, validated } = this.state;
@@ -82,7 +104,7 @@ export default class ShowCaseScreen extends Component {
           onSelect={selected => this.setState({ formSelected: selected })}          
         >
           <Tab eventKey="buscaPessoa" title="Buscar pessoa">
-            <Form  noValidate validated={validated} onSubmit={this.handleSubmit}>
+            <Form noValidate validated={validated} onSubmit={this.onSubmitPhysicalPerson}>
               <Form.Control type="nome" placeholder="Informe o nome completo" />
               <Form.Control type="cpf" placeholder="Informe o CPF" />
               <Form.Control type="rg" placeholder="Informe o RG" />
@@ -101,7 +123,7 @@ export default class ShowCaseScreen extends Component {
             </Form>
           </Tab>
           <Tab eventKey="buscaEmpresa" title="buscar Empresa">
-            <Form  noValidate validated={validated} onSubmit={this.handleSubmit}>
+            <Form noValidate validated={validated} onSubmit={this.onSubmitLegalPerson}>
               <Form.Control type="cnpj" placeholder="Informe o CNPJ" />
               <Button variant="primary" type="submit">
                 Iniciar procura
