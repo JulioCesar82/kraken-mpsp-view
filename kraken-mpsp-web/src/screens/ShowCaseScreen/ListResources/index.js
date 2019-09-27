@@ -4,7 +4,7 @@ import {  } from "react-bootstrap";
 
 import "./styles.css";
 
-const ListResources = () => {
+const ListResources = ({ listResources }) => {
     return (
         <div>
             <h4>Resources</h4>

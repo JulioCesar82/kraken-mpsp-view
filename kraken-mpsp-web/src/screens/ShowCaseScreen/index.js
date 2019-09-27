@@ -9,6 +9,32 @@ import FormPhysicalPerson from "./FormPhysicalPerson";
 import FormLegalPerson from "./FormLegalPerson";
 import ListResources from "./ListResources";
 
+const getResources = () => {
+  console.log("JULIO getResources");
+  const apiEndPoint = "http://localhost:8784/api";
+
+  fetch(`${apiEndPoint}/ResourcesFound`, {
+    method: "get",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
+  })
+    .then(async response => {
+      if (response.ok) {
+        var data = await response.blob();
+        console.log("JULIO RETORNO API", data);
+      } else {
+        console.log("Network response was not ok.");
+      }
+    })
+    .catch(error => {
+      console.log(
+        "There has been a problem with your fetch operation: " + error.message
+      );
+    });
+};
+
 export default class ShowCaseScreen extends Component {
   constructor(props) {
     super(props);
@@ -57,7 +83,7 @@ export default class ShowCaseScreen extends Component {
           </div>
 
           <div className="listResources">
-            <ListResources />
+            <ListResources listResources={{}} />
           </div>
         </div>
 
