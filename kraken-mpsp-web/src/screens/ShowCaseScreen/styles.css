@@ -3,10 +3,6 @@
     margin: 10px;
 }
 
-.logoIcon {
-    font-family: SeasonFourteen;
-}
-
 /* ** PAGE ** */
 .ilustrationContainer {
     width: 50%;
@@ -39,4 +35,9 @@
 /* box de forms */
 .formContainer {
     width: 50%;
+}
+
+/* listResources */
+.listResources {
+    
 }
