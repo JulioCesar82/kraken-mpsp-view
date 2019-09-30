@@ -9,85 +9,77 @@ import FormPhysicalPerson from "./FormPhysicalPerson";
 import FormLegalPerson from "./FormLegalPerson";
 import ListResources from "./ListResources";
 
-const getResources = () => {
-  console.log("JULIO getResources");
-  const apiEndPoint = "http://localhost:8784/api";
-
-  fetch(`${apiEndPoint}/ResourcesFound`, {
-    method: "get",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    }
-  })
-    .then(async response => {
-      if (response.ok) {
-        var data = await response.blob();
-        console.log("JULIO RETORNO API", data);
-      } else {
-        console.log("Network response was not ok.");
-      }
-    })
-    .catch(error => {
-      console.log(
-        "There has been a problem with your fetch operation: " + error.message
-      );
-    });
-};
-
 export default class ShowCaseScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formSelected: "buscaPessoa"
+      apiEndPoint: "http://localhost:8784/api",
+      listResources: []
     };
   }
 
+  addResource = resource => {
+    console.log("[ShowCaseScreen][addResource] resource", resource);
+    const { listResources } = this.state;
+    if (Array.isArray(resource)) {
+      resource.forEach(item => {
+        listResources.push(item);
+      });
+    } else {
+      listResources.push(resource);
+    }
+    this.setState({ listResources: listResources });
+  };
+
   render() {
-    const { formSelected } = this.state;
+    const { listResources } = this.state;
     return (
-      <FullContainer content={
+      <FullContainer
+        content={
+          <div className="container main-content">
+            <img
+              className="ilustrationContainer"
+              src="images/looking_profile.svg"
+              alt="Kraken MPSP"
+            />
+            <div className="row no-gutters infoContainer">
+              <div className="col col-md-8 mt-5 mb-5">
+                <h2 className="titleInfoContainer">
+                  A plataforma de busca pública do Brasil
+                </h2>
+                <p className="descInfoContainer">
+                  <small className="text-muted">
+                    Centralizando informações em um só
+                    lugar, assim agilizando o tempo de resolução dos processos!
+                  </small>
+                </p>
+              </div>
+            </div>
 
-        <div className="body">
-          <img
-            className="ilustrationContainer"
-            src="images/looking_profile.svg"
-            alt="Kraken MPSP"
-          />
+            <div className="row no-gutters formsSearch">
+              <div className="col col-md-8">
+                <Tabs
+                  id="search-forms"
+                  variant="pills"
+                  defaultActiveKey="buscaPessoa"
+                >
+                  <Tab eventKey="buscaPessoa" title="Procurar pessoa">
+                    <FormPhysicalPerson />
+                  </Tab>
+                  <Tab eventKey="buscaEmpresa" title="Procurar empresa">
+                    <FormLegalPerson />
+                  </Tab>
+                </Tabs>
+              </div>
+            </div>
 
-          <div className="infoContainer">
-            <h1 className="titleInfoContainer">
-              A plataforma de busca pública do Brasil
-          </h1>
-            <p className="descInfoContainer">
-              <small className="text-muted">
-                Centralizando os dados obtidos em diversos portais em um só lugar,
-                assim agilizando o tempo de resolução dos processos!
-            </small>
-            </p>
+            <ListResources
+              listResources={listResources}
+              addResource={this.addResource}
+            />
           </div>
-
-          <div className="formContainer">
-            <Tabs
-              id="search-forms"
-              activeKey={formSelected}
-              onSelect={selected => this.setState({ formSelected: selected })}
-            >
-              <Tab eventKey="buscaPessoa" title="Buscar pessoa">
-                <FormPhysicalPerson />
-              </Tab>
-              <Tab eventKey="buscaEmpresa" title="buscar Empresa">
-                <FormLegalPerson />
-              </Tab>
-            </Tabs>
-          </div>
-
-          <div className="listResources">
-            <ListResources listResources={{}} />
-          </div>
-        </div>
-
-      } />
+        }
+      />
     );
   }
 }

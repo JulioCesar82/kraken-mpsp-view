@@ -1,4 +1,8 @@
-
 .body {
-    background-color: "white";
+  background-color: "white";
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 900;
 }

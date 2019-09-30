@@ -1,4 +1,10 @@
-
-.body {
-    background-color: "white";
+/* ** novo estilo - campos sem borda */
+/* card shadow-light-lg lift lift-lg */
+.form-control-flush {
+  padding-left: 0;
+  padding-right: 0;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-left-width: 0;
+  border-radius: 0;
 }
