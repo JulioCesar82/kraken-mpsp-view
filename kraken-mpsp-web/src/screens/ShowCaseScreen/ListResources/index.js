@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 
-import { } from "react-bootstrap";
+import {} from "react-bootstrap";
 
 import "./styles.css";
 
@@ -50,7 +50,7 @@ class ListResources extends Component {
       .catch(error => {
         console.log(
           "[ListResources][getPhysical] There has been a problem: " +
-          error.message
+            error.message
         );
         this.setLoading(false);
       });
@@ -114,22 +114,65 @@ class ListResources extends Component {
       .catch(error => {
         console.log(
           "[ListResources][getResource] There has been a problem: " +
-          error.message
+            error.message
         );
         this.setLoading(false);
       });
   };
 
-  render() {
-    const { listResources } = this.props;
+  renderCard = (card, index) => {
+    console.log("JULIO renderCard", card);
+    if (!card) {
+      return null;
+    }
+    
+    return (
+      <div className="card card-task mt-2" key={index}>
+        <div className="progress">
+          <div
+            className="progress-bar bg-danger"
+            role="progressbar"
+            style={{ width: "75%" }}
+            aria-valuenow="25"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
+        </div>
+
+        <div className="card-body">
+          <div className="row no-gutters">
+            <div className="col-12 col-md-6 card-title">
+              <p className="text">
+                {card.type === 1 ? "CPF:" : "CNPJ:"}{" "}
+                {card.type === 1 ? card.cpf : card.cnpj}
+              </p>
+              <span className="text-small">Hoje</span>
+            </div>
+            <div className="col-12 col-md-6 d-flex justify-content-end card-details">
+              <div className="card-result">
+                <i className="fa fa-tasks"></i>
+                <span className="ml-1">4/5 Buscas Concluídas</span>
+              </div>
+              <div className="ml-3 card-options">
+                <button type="button" className="btn btn-outline-info">
+                  Download
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  renderResults = resources => {
+    if (!resources) {
+      return null;
+    }
     return (
       <Fragment>
         <div className="row no-gutters">
-          <h2 className="title mt-5 mb-5 ml-auto mr-auto">Investigações</h2>
-        </div>
-
-        <div className="row no-gutters">
-          <div>
+          <div className="col-12 col-md-4 ml-auto">
             <div className="input-group input-group-round">
               <div className="input-group-prepend">
                 <span className="input-group-text">
@@ -139,42 +182,38 @@ class ListResources extends Component {
               <input
                 type="search"
                 className="form-control filter-list-input"
-                placeholder="Filter tasks"
-                aria-label="Filter Tasks"
+                placeholder="Filtrar resultados"
+                aria-label="Filtrar resultados"
               />
             </div>
           </div>
         </div>
 
         <div className="row no-gutters listResources">
-          <div className="card-list">
-
-
-            <div className="card-list-body">
-              {listResources.map(item => {
-
-                return (
-                  <Fragment>
-
-                    <div className="progress">
-                      <div className="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-
-                    <div className="card card-task">
-                      {item.type === 1 ? "CPF:" : "CNPJ:"} {item.type === 1 ? item.cpf : item.cnpj}
-                    </div>
-
-                  </Fragment>
-
-                );
-
-              })
-              }
+          <div className="col-12">
+            <div className="card-list">
+              <div className="card-list-body">
+                {resources.map((item, index) => this.renderCard(item, index))}
+              </div>
             </div>
-
           </div>
         </div>
       </Fragment>
+    );
+  };
+
+  render() {
+    const { listResources } = this.props;
+    return (
+      <div className="mt-5 mb-5 ResultContent">
+        <h2 className="title">Investigações</h2>
+
+        {!listResources.length ? (
+          <p>Nenhum resultado encontrado</p>
+        ) : (
+          this.renderResults(listResources)
+        )}
+      </div>
     );
   }
 }

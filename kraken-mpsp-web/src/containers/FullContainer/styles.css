@@ -24,7 +24,31 @@
     }
 }
 
-
 .logoIcon {
     font-family: SeasonFourteen;
+}
+
+.custom-footer {
+    font-size: 16px;
+    background: #000000;
+}
+
+.custom-footer p,
+.custom-footer span {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.custom-footer a {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.custom-footer .footer-social i {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.custom-footer .footer-title {
+    color: #fff;
+    margin-bottom: 40px;
+    font-size: 20px;
+    font-weight: 700;
 }

@@ -32,15 +32,42 @@
   />
   <link 
     rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
   />
+  <link rel="stylesheet" href="https://d1azc1qln24ryf.cloudfront.net/114779/Socicon/style-cf.css?u8vidh">
+
+  <style>
+    .svgLoader {
+      animation: spin 0.5s linear infinite;
+      margin: auto;
+    }
+    .divLoader {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
   </head>
   <body>
     <noscript
       >Você precisa habilitar o JavaScript para executar este
       aplicativo.</noscript
     >
-    <div id="root"></div>
+    <div id="root">
+      <div className="divLoader">
+        <svg className="svgLoader" viewBox="0 0 1024 1024" width="10em" height="10em">
+          <path fill="lightblue"
+            d="PATH FOR THE LOADER ICON"
+          />
+        </svg>
+      </div>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
