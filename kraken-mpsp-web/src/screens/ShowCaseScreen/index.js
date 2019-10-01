@@ -64,10 +64,10 @@ export default class ShowCaseScreen extends Component {
                   defaultActiveKey="buscaPessoa"
                 >
                   <Tab eventKey="buscaPessoa" title="Procurar pessoa">
-                    <FormPhysicalPerson />
+                    <FormPhysicalPerson addResource={this.addResource} />
                   </Tab>
                   <Tab eventKey="buscaEmpresa" title="Procurar empresa">
-                    <FormLegalPerson />
+                    <FormLegalPerson addResource={this.addResource} />
                   </Tab>
                 </Tabs>
               </div>

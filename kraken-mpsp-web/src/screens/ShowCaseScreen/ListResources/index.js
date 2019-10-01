@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 
-import {} from "react-bootstrap";
+import { } from "react-bootstrap";
 
 import "./styles.css";
 
@@ -50,7 +50,7 @@ class ListResources extends Component {
       .catch(error => {
         console.log(
           "[ListResources][getPhysical] There has been a problem: " +
-            error.message
+          error.message
         );
         this.setLoading(false);
       });
@@ -114,7 +114,7 @@ class ListResources extends Component {
       .catch(error => {
         console.log(
           "[ListResources][getResource] There has been a problem: " +
-            error.message
+          error.message
         );
         this.setLoading(false);
       });
@@ -130,15 +130,15 @@ class ListResources extends Component {
 
         <div className="row no-gutters">
           <div>
-            <div class="input-group input-group-round">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
+            <div className="input-group input-group-round">
+              <div className="input-group-prepend">
+                <span className="input-group-text">
                   <span className="fa fa-filter"></span>
                 </span>
               </div>
               <input
                 type="search"
-                class="form-control filter-list-input"
+                className="form-control filter-list-input"
                 placeholder="Filter tasks"
                 aria-label="Filter Tasks"
               />
@@ -147,13 +147,32 @@ class ListResources extends Component {
         </div>
 
         <div className="row no-gutters listResources">
-          <ul>
-            {listResources.map(item => (
-              <li>
-                {item.type} - {item.nomeCompleto}
-              </li>
-            ))}
-          </ul>
+          <div className="card-list">
+
+
+            <div className="card-list-body">
+              {listResources.map(item => {
+
+                return (
+                  <Fragment>
+
+                    <div className="progress">
+                      <div className="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+                    <div className="card card-task">
+                      {item.type === 1 ? "CPF:" : "CNPJ:"} {item.type === 1 ? item.cpf : item.cnpj}
+                    </div>
+
+                  </Fragment>
+
+                );
+
+              })
+              }
+            </div>
+
+          </div>
         </div>
       </Fragment>
     );
