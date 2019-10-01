@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 
-import {} from "react-bootstrap";
+import { } from "react-bootstrap";
 
 import "./styles.css";
 
@@ -9,7 +9,8 @@ class ListResources extends Component {
     super(props);
     this.state = {
       loading: false,
-      apiEndPoint: "http://localhost:8784/api"
+      apiEndPoint: "http://localhost:8784/api",
+      listFilter: []
     };
   }
   componentDidMount() {
@@ -21,6 +22,29 @@ class ListResources extends Component {
     console.log("[ListResources][setFormLoading] isLoading", isLoading);
     this.setState({ loading: isLoading });
   };
+
+  filterList = text => {
+    if (!text) {
+      this.setState({ listFilter: [] });
+      return null;
+    }
+
+    const { resources } = this.props;
+
+    var listFilter = resources.filter(item => {
+      if (
+        (item.cpf !== null && item.cpf === text) ||
+        (item.cnpj !== null && item.cnpj === text)
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    );
+
+    this.setState({ listFilter: listFilter });
+  }
 
   getPhysical = () => {
     console.log("[ListResources][getPhysical] started");
@@ -50,7 +74,7 @@ class ListResources extends Component {
       .catch(error => {
         console.log(
           "[ListResources][getPhysical] There has been a problem: " +
-            error.message
+          error.message
         );
         this.setLoading(false);
       });
@@ -114,7 +138,7 @@ class ListResources extends Component {
       .catch(error => {
         console.log(
           "[ListResources][getResource] There has been a problem: " +
-            error.message
+          error.message
         );
         this.setLoading(false);
       });
@@ -125,14 +149,24 @@ class ListResources extends Component {
     if (!card) {
       return null;
     }
-    
+
+    var errosPortais = card.resultadoFinal ? card.resultadoFinal.totalErrors : 0;
+    var totalPortais = card.resultadoFinal ? card.resultadoFinal.findTotal : 0;
+
+    var portaisConcluidos = totalPortais - errosPortais;
+    var porcentagemConcluido = portaisConcluidos / totalPortais * 100 || 0;
+
+    var showColorBusca = 
+      porcentagemConcluido < 33 ? "danger" :
+      porcentagemConcluido < 66 ? "info" : "success";
+
     return (
       <div className="card card-task mt-2" key={index}>
         <div className="progress">
           <div
-            className="progress-bar bg-danger"
+            className={`progress-bar bg-${showColorBusca}`}
             role="progressbar"
-            style={{ width: "75%" }}
+            style={{ width: `${porcentagemConcluido}%` }}
             aria-valuenow="25"
             aria-valuemin="0"
             aria-valuemax="100"
@@ -151,10 +185,14 @@ class ListResources extends Component {
             <div className="col-12 col-md-6 d-flex justify-content-end card-details">
               <div className="card-result">
                 <i className="fa fa-tasks"></i>
-                <span className="ml-1">4/5 Buscas Concluídas</span>
+                <span className="ml-1">
+                  {portaisConcluidos ? portaisConcluidos : "-"} / {totalPortais ? totalPortais : "-"}
+                  {" "}
+                  {totalPortais > 0 ? "Buscas Concluídas" : "Busca Pendente"}
+                </span>
               </div>
               <div className="ml-3 card-options">
-                <button type="button" className="btn btn-outline-info">
+                <button type="button" className="btn btn-outline-info" disabled={totalPortais === 0}>
                   Download
                 </button>
               </div>
@@ -184,6 +222,7 @@ class ListResources extends Component {
                 className="form-control filter-list-input"
                 placeholder="Filtrar resultados"
                 aria-label="Filtrar resultados"
+                onChange={value => this.filterList(value)}
               />
             </div>
           </div>
@@ -204,6 +243,8 @@ class ListResources extends Component {
 
   render() {
     const { listResources } = this.props;
+    const { listFilter } = this.state;
+
     return (
       <div className="mt-5 mb-5 ResultContent">
         <h2 className="title">Investigações</h2>
@@ -211,8 +252,8 @@ class ListResources extends Component {
         {!listResources.length ? (
           <p>Nenhum resultado encontrado</p>
         ) : (
-          this.renderResults(listResources)
-        )}
+            this.renderResults(listFilter.length > 0 ? listFilter : listResources)
+          )}
       </div>
     );
   }

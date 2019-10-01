@@ -6,29 +6,32 @@ import "./styles.css";
 const FullContainer = ({ content }) => {
   return (
     <Fragment>
-      <Navbar expand="md" className="custom-navbar-light">
-        <div className="container">
-          <Navbar.Brand href="/showcase">
-            <h1 className="logoIcon">Kraken</h1>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbar-options">
-            <span className="fa fa-bars"></span> Menu
-          </Navbar.Toggle>
-          <Navbar.Collapse id="navbar-options" className="justify-content-end">
-            {/* FALTA A PAGINA SEARCH E OPTIONS QUE SERA LINK NA PAGINA*/}
-            <Nav>
-              {/* TEM QUE FAZER O IF DE LOGADO OU NAO */}
-              <Nav.Link href="/profile">Profile</Nav.Link>
-              <Nav.Link href="/signin">SignIn</Nav.Link>
-              <Nav.Link href="/profile-register">ProfileRegister</Nav.Link>
+      <main className="main-content">
+       
+        <Navbar expand="md" className="custom-navbar-light">
+          <div className="container">
+            <Navbar.Brand href="/showcase">
+              <h1 className="logoIcon">Kraken</h1>
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="navbar-options">
+              <span className="fa fa-bars"></span> Menu
+            </Navbar.Toggle>
+            <Navbar.Collapse id="navbar-options" className="justify-content-end">
+              {/* FALTA A PAGINA SEARCH E OPTIONS QUE SERA LINK NA PAGINA*/}
+              <Nav>
+                {/* TEM QUE FAZER O IF DE LOGADO OU NAO */}
+                <Nav.Link href="/profile">Profile</Nav.Link>
+                <Nav.Link href="/signin">SignIn</Nav.Link>
+                <Nav.Link href="/profile-register">ProfileRegister</Nav.Link>
 
-              <Nav.Link href="/contact">Contact</Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </div>
-      </Navbar>
+                <Nav.Link href="/contact">Contact</Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </div>
+        </Navbar>
 
-      {content}
+        {content}
+      </main>
 
       <footer className="custom-footer">
         <div className="container">
