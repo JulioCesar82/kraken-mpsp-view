@@ -2,13 +2,19 @@ import React, { Component } from "react";
 
 import "./styles.css";
 
+import FullContainer from "../../containers/FullContainer";
+
 export default class OptionsScreen extends Component {
 
     render() {
         return(
-            <div>
-                <h1>Página OptionsScreen</h1>
-            </div>
+            <FullContainer
+                content={
+                    <div>
+                        <h1>Página OptionsScreen</h1>
+                    </div>
+                }            
+            />
         );
     }
 }

@@ -1,0 +1,54 @@
+
+@media (max-width: 767.98px)
+{
+    .custom-navbar-light {
+        background: #000000;
+    }
+    .custom-navbar-light .navbar-brand {
+        color: #fff;
+    }
+    .custom-navbar-light .navbar-toggler {
+        border: none;
+        color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        padding: 10px;
+        text-transform: uppercase;
+        font-size: 16px;
+        letter-spacing: .1em;
+    }
+    .custom-navbar-light .navbar-nav .nav-link {
+        color: rgba(255, 255, 255, 0.5);
+    }
+    .custom-navbar-light .navbar-nav .nav-link.active {
+        color: #6c63ff;
+    }
+}
+
+.logoIcon {
+    font-family: SeasonFourteen;
+}
+
+.custom-footer {
+    font-size: 16px;
+    background: #000000;
+}
+
+.custom-footer p,
+.custom-footer span {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.custom-footer a {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.custom-footer .footer-social i {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.custom-footer .footer-title {
+    color: #fff;
+    margin-bottom: 40px;
+    font-size: 20px;
+    font-weight: 700;
+}

@@ -4,3 +4,10 @@ body {
     height: 100vh;
     font-size: 16px;
 }
+
+/* remove margem da linha */
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  
