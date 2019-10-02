@@ -27,7 +27,7 @@ class ListResources extends Component {
 
   setModalShow = (status, card = null) => {
     this.setState({ modalShow: status, cardSelected: card });
-  }
+  };
 
   filterList = text => {
     if (!text) {
@@ -46,11 +46,10 @@ class ListResources extends Component {
       } else {
         return false;
       }
-    }
-    );
+    });
 
     this.setState({ listFilter: listFilter });
-  }
+  };
 
   getPhysical = () => {
     console.log("[ListResources][getPhysical] started");
@@ -80,7 +79,7 @@ class ListResources extends Component {
       .catch(error => {
         console.log(
           "[ListResources][getPhysical] There has been a problem: " +
-          error.message
+            error.message
         );
         this.setLoading(false);
       });
@@ -117,6 +116,35 @@ class ListResources extends Component {
       });
   };
 
+  renderProperties = object => {
+    if (object !== null) {
+      var values = [];
+      for (let prop in object) {
+        if (Array.isArray(object[prop])) {
+          var listValues = [<h5>{prop}</h5>];
+          object[prop].forEach(element => {
+            listValues.push(this.renderProperties(element));
+          });
+          return listValues;
+        }
+
+        var valorDaProperty = object[prop];
+        if (valorDaProperty.indexOf(".png") != -1) {
+          valorDaProperty = (<a target="_blank" href={valorDaProperty}>abrir arquivo</a>);
+        }
+        values.push(
+          <div className="row">
+            <div className="col">{`${prop}`}</div>
+            <div className="col">{valorDaProperty}</div>
+          </div>
+        );
+      }
+      return values;
+    } else {
+      return null;
+    }
+  };
+
   centeredModal = () => {
     const { modalShow, cardSelected } = this.state;
     return (
@@ -129,38 +157,57 @@ class ListResources extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            {cardSelected ? cardSelected.type === 1 ? "CPF" : "CNPJ" : ""}{" "}
-            {cardSelected ? cardSelected.type === 1 ? cardSelected.cpf : cardSelected.cnpj : ""}
+            {cardSelected ? (cardSelected.type === 1 ? "CPF" : "CNPJ") : ""}{" "}
+            {cardSelected
+              ? cardSelected.type === 1
+                ? cardSelected.cpf
+                : cardSelected.cnpj
+              : ""}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
           <h3>Arisp</h3>
+          {cardSelected !== null && cardSelected.arisp !== null
+            ? this.renderProperties(cardSelected.arisp)
+            : "sem valores"}
 
-          {
-            /*
-            for (x in person) {
-              txt += person[x];
-            }
-            */
-          }
-          <div className="row">
-            <div className="col">
-              property
-            </div>
-            <div className="col">
-              value
-            </div>
-          </div>
-          
+          <h3>Arpensp</h3>
+          {cardSelected !== null && cardSelected.arpensp !== null
+            ? this.renderProperties(cardSelected.arpensp)
+            : "sem valores"}
+
+          <h3>Caged</h3>
+          {cardSelected !== null && cardSelected.caged !== null
+            ? this.renderProperties(cardSelected.caged)
+            : "sem valores"}
+
+          <h3>Censec</h3>
+          {cardSelected !== null && cardSelected.censec !== null
+            ? this.renderProperties(cardSelected.censec)
+            : "sem valores"}
+
+          <h3>Siel</h3>
+          {cardSelected !== null && cardSelected.siel !== null
+            ? this.renderProperties(cardSelected.siel)
+            : "sem valores"}
+
+          <h3>Sivec</h3>
+          {cardSelected !== null && cardSelected.sivec !== null
+            ? this.renderProperties(cardSelected.sivec)
+            : "sem valores"}
         </Modal.Body>
         <Modal.Footer>
-          <button type="button" className="btn btn-outline-primary" onClick={() => this.setModalShow(false)}>Fechar visualização</button>
+          <button
+            type="button"
+            className="btn btn-outline-primary"
+            onClick={() => this.setModalShow(false)}
+          >
+            Fechar visualização
+          </button>
         </Modal.Footer>
       </Modal>
     );
-  }
-
+  };
 
   getResource = id => {
     console.log("[ListResources][getResource] started");
@@ -189,28 +236,33 @@ class ListResources extends Component {
       .catch(error => {
         console.log(
           "[ListResources][getResource] There has been a problem: " +
-          error.message
+            error.message
         );
         this.setLoading(false);
       });
   };
 
   renderCard = (card, index) => {
-    console.log("JULIO renderCard", card);
     if (!card) {
       return null;
     }
 
-    var errosPortais = card.resultadoFinal ? card.resultadoFinal.totalErrors : 0;
+    var errosPortais = card.resultadoFinal
+      ? card.resultadoFinal.totalErrors
+      : 0;
     var totalPortais = card.resultadoFinal ? card.resultadoFinal.findTotal : 0;
 
     var portaisConcluidos = totalPortais - errosPortais;
-    var porcentagemConcluido = portaisConcluidos / totalPortais * 100 || 0;
+    var porcentagemConcluido = (portaisConcluidos / totalPortais) * 100 || 0;
 
     var showColorBusca =
-      porcentagemConcluido < 33 ? "danger" :
-        porcentagemConcluido < 66 ? "warning" :
-          porcentagemConcluido < 99 ? "info" : "success";
+      porcentagemConcluido < 33
+        ? "danger"
+        : porcentagemConcluido < 66
+        ? "warning"
+        : porcentagemConcluido < 99
+        ? "info"
+        : "success";
 
     return (
       <div className="card card-task mt-2" key={index}>
@@ -238,20 +290,26 @@ class ListResources extends Component {
               <div className="card-result">
                 <i className="fa fa-tasks"></i>
                 <span className="ml-1">
-                  {portaisConcluidos ? portaisConcluidos : "-"} / {totalPortais ? totalPortais : "-"}
-                  {" "}
+                  {portaisConcluidos ? portaisConcluidos : "-"} /{" "}
+                  {totalPortais ? totalPortais : "-"}{" "}
                   {totalPortais > 0 ? "Buscas Concluídas" : "Busca Pendente"}
                 </span>
               </div>
               <div className="ml-3 card-options">
-                <button type="button" className="btn btn-outline-primary"
+                <button
+                  type="button"
+                  className="btn btn-outline-primary"
                   disabled={totalPortais === 0}
-                  onClick={() => this.setModalShow(true, card)}>
+                  onClick={() => this.setModalShow(true, card)}
+                >
                   Visualizar
                 </button>
-                <button type="button" className="btn btn-outline-info ml-2"
+                <button
+                  type="button"
+                  className="btn btn-outline-info ml-2"
                   disabled={totalPortais === 0}
-                  onClick={() => { }}>
+                  onClick={() => {}}
+                >
                   Download
                 </button>
               </div>
@@ -313,8 +371,8 @@ class ListResources extends Component {
         {!listResources.length ? (
           <p>Nenhum resultado encontrado</p>
         ) : (
-            this.renderResults(listFilter.length > 0 ? listFilter : listResources)
-          )}
+          this.renderResults(listFilter.length > 0 ? listFilter : listResources)
+        )}
       </div>
     );
   }
