@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 
-import { } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 import "./styles.css";
 
@@ -10,7 +10,9 @@ class ListResources extends Component {
     this.state = {
       loading: false,
       apiEndPoint: "http://localhost:8784/api",
-      listFilter: []
+      listFilter: [],
+      modalShow: false,
+      cardSelected: null
     };
   }
   componentDidMount() {
@@ -22,6 +24,10 @@ class ListResources extends Component {
     console.log("[ListResources][setFormLoading] isLoading", isLoading);
     this.setState({ loading: isLoading });
   };
+
+  setModalShow = (status, card = null) => {
+    this.setState({ modalShow: status, cardSelected: card });
+  }
 
   filterList = text => {
     if (!text) {
@@ -111,6 +117,51 @@ class ListResources extends Component {
       });
   };
 
+  centeredModal = () => {
+    const { modalShow, cardSelected } = this.state;
+    return (
+      <Modal
+        show={modalShow}
+        onHide={() => this.setModalShow(false)}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {cardSelected ? cardSelected.type === 1 ? "CPF" : "CNPJ" : ""}{" "}
+            {cardSelected ? cardSelected.type === 1 ? cardSelected.cpf : cardSelected.cnpj : ""}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+          <h3>Arisp</h3>
+
+          {
+            /*
+            for (x in person) {
+              txt += person[x];
+            }
+            */
+          }
+          <div className="row">
+            <div className="col">
+              property
+            </div>
+            <div className="col">
+              value
+            </div>
+          </div>
+          
+        </Modal.Body>
+        <Modal.Footer>
+          <button type="button" className="btn btn-outline-primary" onClick={() => this.setModalShow(false)}>Fechar visualização</button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+
+
   getResource = id => {
     console.log("[ListResources][getResource] started");
     const { apiEndPoint } = this.state;
@@ -156,9 +207,10 @@ class ListResources extends Component {
     var portaisConcluidos = totalPortais - errosPortais;
     var porcentagemConcluido = portaisConcluidos / totalPortais * 100 || 0;
 
-    var showColorBusca = 
+    var showColorBusca =
       porcentagemConcluido < 33 ? "danger" :
-      porcentagemConcluido < 66 ? "info" : "success";
+        porcentagemConcluido < 66 ? "warning" :
+          porcentagemConcluido < 99 ? "info" : "success";
 
     return (
       <div className="card card-task mt-2" key={index}>
@@ -177,12 +229,12 @@ class ListResources extends Component {
           <div className="row no-gutters">
             <div className="col-12 col-md-6 card-title">
               <p className="text">
-                {card.type === 1 ? "CPF:" : "CNPJ:"}{" "}
+                {card.type === 1 ? "CPF" : "CNPJ"}{" "}
                 {card.type === 1 ? card.cpf : card.cnpj}
               </p>
               <span className="text-small">Hoje</span>
             </div>
-            <div className="col-12 col-md-6 d-flex justify-content-end card-details">
+            <div className="col-12 col-lg-6 d-flex justify-content-end card-details">
               <div className="card-result">
                 <i className="fa fa-tasks"></i>
                 <span className="ml-1">
@@ -192,7 +244,14 @@ class ListResources extends Component {
                 </span>
               </div>
               <div className="ml-3 card-options">
-                <button type="button" className="btn btn-outline-info" disabled={totalPortais === 0}>
+                <button type="button" className="btn btn-outline-primary"
+                  disabled={totalPortais === 0}
+                  onClick={() => this.setModalShow(true, card)}>
+                  Visualizar
+                </button>
+                <button type="button" className="btn btn-outline-info ml-2"
+                  disabled={totalPortais === 0}
+                  onClick={() => { }}>
                   Download
                 </button>
               </div>
@@ -243,10 +302,12 @@ class ListResources extends Component {
 
   render() {
     const { listResources } = this.props;
-    const { listFilter } = this.state;
+    const { listFilter, modalShow } = this.state;
 
     return (
       <div className="mt-5 mb-5 ResultContent">
+        {this.centeredModal()}
+
         <h2 className="title">Investigações</h2>
 
         {!listResources.length ? (
