@@ -146,7 +146,7 @@ android {
         debug {
             storeFile file('debug.keystore')
             storePassword 'Senha123/'
-            keyAlias 'debug-alias'
+            keyAlias 'debug-key-alias'
             keyPassword 'Senha123/'
         }
     }

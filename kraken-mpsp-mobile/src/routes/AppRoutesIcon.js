@@ -12,7 +12,7 @@ const TabRoutes = createBottomTabNavigator(
       screen: ShowCaseStack,
       navigationOptions: {
         tabBarIcon: ({ focused, horizontal, tintColor }) => (
-         <Icon name="home" size={30} color="#900" />
+         <Icon name="home" size={30} color={tintColor} />
         )
       }
     },
@@ -20,7 +20,7 @@ const TabRoutes = createBottomTabNavigator(
       screen: OptionsStack,
       navigationOptions: {
         tabBarIcon: ({ focused, horizontal, tintColor }) => (
-         <Icon name="bars" size={30} color="#900" />
+         <Icon name="bars" size={30} color={tintColor} />
         )
       }
     }
@@ -36,8 +36,8 @@ const TabRoutes = createBottomTabNavigator(
         showIcon: true,
         showLabel: false,
         style: styles.tab,
-        activeTintColor: "green",
-        inactiveTintColor: "white"
+        activeTintColor: "#6c63ff",
+        inactiveTintColor: "#ffffff80"
       }
     })
   }
@@ -45,7 +45,7 @@ const TabRoutes = createBottomTabNavigator(
 
 const styles = StyleSheet.create({
   tab: {
-    backgroundColor: "gray",
+    backgroundColor: "#000",
     height: 55
   },
   icon: {

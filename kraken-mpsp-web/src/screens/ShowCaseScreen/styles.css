@@ -30,9 +30,6 @@
 }
 
 @media (max-width: 767.98px) {
-  .main-content {
-    margin-top: 20px;
-  }
   .ilustrationContainer {
     width: 75%;
     top: 40px;

@@ -59,6 +59,15 @@ TODO
 
 # 4. Generate build
 
+To Create keystore for deploy
+
+```bash
+keytool -genkey -v -keystore debug.keystore -alias debug-key-alias -keyalg RSA -keysize 2048 -validity 10000
+
+keytool -importkeystore -srckeystore debug.keystore -destkeystore
+debug.keystore -deststoretype pkcs12
+```
+
 Use the lag for a production build.
 
 ```bash

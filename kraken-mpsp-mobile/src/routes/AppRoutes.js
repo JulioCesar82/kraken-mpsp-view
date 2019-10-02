@@ -22,7 +22,7 @@ export const ShowCaseStack = createStackNavigator({
     screen: ShowCaseScreen,
     navigationOptions: {
       title: "Início",
-      //header: null
+      header: null
     }
   },
   Search: {
