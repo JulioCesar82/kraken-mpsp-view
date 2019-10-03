@@ -207,39 +207,6 @@ class ListResources extends Component {
     );
   };
 
-  getResource = id => {
-    console.log("[ListResources][getResource] started");
-    const { apiEndPoint } = this.state;
-
-    this.setLoading(true);
-    fetch(`${apiEndPoint}/ResourcesFound/${id}`, {
-      method: "get",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    })
-      .then(async response => {
-        if (response.ok) {
-          var data = await response.json();
-          console.log("[ListResources][getResource] Response api", data);
-          // abrir modal com as infos
-        } else {
-          console.log(
-            "[ListResources][getResource] Network response was not ok."
-          );
-        }
-        this.setLoading(false);
-      })
-      .catch(error => {
-        console.log(
-          "[ListResources][getResource] There has been a problem: " +
-            error.message
-        );
-        this.setLoading(false);
-      });
-  };
-
   renderCard = (card, index) => {
     if (!card) {
       return null;
