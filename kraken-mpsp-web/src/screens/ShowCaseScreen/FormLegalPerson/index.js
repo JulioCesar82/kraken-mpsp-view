@@ -81,14 +81,14 @@ class FormLegalPerson extends Component {
             values,
             touched,
             errors,
-            dirty,
-            isSubmitting,
+            //dirty,
+            //isSubmitting,
             handleChange,
             handleBlur,
             handleSubmit,
-            handleReset,
+            //handleReset,
             isValid,
-            submitForm
+            //submitForm
           } = props;
           return (
             <form onSubmit={handleSubmit} className="formContainer">

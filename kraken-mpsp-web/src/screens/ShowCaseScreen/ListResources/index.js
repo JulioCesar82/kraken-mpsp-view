@@ -35,12 +35,13 @@ class ListResources extends Component {
       return null;
     }
 
-    const { resources } = this.props;
+    const { listResources } = this.props;
 
-    var listFilter = resources.filter(item => {
+    var listFilter = listResources.filter(item => {
+      console.log("JULIO TESTE `${item.cpf}`.indexOf(text)", item.cpf);
       if (
-        (item.cpf !== null && item.cpf === text) ||
-        (item.cnpj !== null && item.cnpj === text)
+        item.cpf != null && `${item.cpf}`.indexOf(text) != -1 ||
+        item.cnpj != null && `${item.cnpj}`.indexOf(text) != -1
       ) {
         return true;
       } else {
@@ -48,6 +49,8 @@ class ListResources extends Component {
       }
     });
 
+    console.log("JULIO TESTE listResources", listResources);
+    console.log("JULIO TESTE listFilter", listFilter);
     this.setState({ listFilter: listFilter });
   };
 
@@ -117,25 +120,25 @@ class ListResources extends Component {
   };
 
   renderProperties = object => {
-    if (object !== null) {
+    if (object != null) {
       var values = [];
       for (let prop in object) {
         if (Array.isArray(object[prop])) {
-          var listValues = [<h5>{prop}</h5>];
+          var listValues = [<h3>{prop}</h3>];
           object[prop].forEach(element => {
             listValues.push(this.renderProperties(element));
           });
           return listValues;
         }
 
-        var valorDaProperty = object[prop];
+        var valorDaProperty = `${object[prop]}`;
         if (valorDaProperty.indexOf(".png") != -1) {
           valorDaProperty = (<a target="_blank" href={valorDaProperty}>abrir arquivo</a>);
         }
         values.push(
           <div className="row">
-            <div className="col">{`${prop}`}</div>
-            <div className="col">{valorDaProperty}</div>
+            <div className="col-4">{`${prop}`}</div>
+            <div className="col-8">{valorDaProperty}</div>
           </div>
         );
       }
@@ -157,44 +160,39 @@ class ListResources extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            {cardSelected ? (cardSelected.type === 1 ? "CPF" : "CNPJ") : ""}{" "}
-            {cardSelected
-              ? cardSelected.type === 1
-                ? cardSelected.cpf
-                : cardSelected.cnpj
-              : ""}
+            MPSP KRAKEN - Relatório da busca
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h3>Arisp</h3>
-          {cardSelected !== null && cardSelected.arisp !== null
-            ? this.renderProperties(cardSelected.arisp)
-            : "sem valores"}
-
-          <h3>Arpensp</h3>
-          {cardSelected !== null && cardSelected.arpensp !== null
+          <h3 className="containerShow">Informações gerais (Arpensp)</h3>
+          {cardSelected != null && cardSelected.arpensp != null
             ? this.renderProperties(cardSelected.arpensp)
-            : "sem valores"}
+            : "Não há informações neste portal"}
 
-          <h3>Caged</h3>
-          {cardSelected !== null && cardSelected.caged !== null
+          <h3 className="containerShow">Informações trabalhistas (Caged)</h3>
+          {cardSelected != null && cardSelected.caged != null
             ? this.renderProperties(cardSelected.caged)
-            : "sem valores"}
+            : "Não há informações neste portal"}
 
-          <h3>Censec</h3>
-          {cardSelected !== null && cardSelected.censec !== null
+          <h3 className="containerShow">Procurações (Censec)</h3>
+          {cardSelected != null && cardSelected.censec != null
             ? this.renderProperties(cardSelected.censec)
-            : "sem valores"}
+            : "Não há informações neste portal"}
 
-          <h3>Siel</h3>
-          {cardSelected !== null && cardSelected.siel !== null
+          <h3 className="containerShow">Informações eleitorais (Siel)</h3>
+          {cardSelected != null && cardSelected.siel != null
             ? this.renderProperties(cardSelected.siel)
-            : "sem valores"}
+            : "Não há informações neste portal"}
 
-          <h3>Sivec</h3>
-          {cardSelected !== null && cardSelected.sivec !== null
+          <h3 className="containerShow">Certidões (Sivec)</h3>
+          {cardSelected != null && cardSelected.sivec != null
             ? this.renderProperties(cardSelected.sivec)
-            : "sem valores"}
+            : "Não há informações neste portal"}
+
+          <h3 className="containerShow">Dados imobiliários (Arisp)</h3>
+          {cardSelected != null && cardSelected.arisp != null
+            ? this.renderProperties(cardSelected.arisp)
+            : "Não há informações neste portal"}
         </Modal.Body>
         <Modal.Footer>
           <button
@@ -360,7 +358,7 @@ class ListResources extends Component {
 
   render() {
     const { listResources } = this.props;
-    const { listFilter, modalShow } = this.state;
+    const { listFilter } = this.state;
 
     return (
       <div className="mt-5 mb-5 ResultContent">

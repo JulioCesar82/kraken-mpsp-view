@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {} from "react-bootstrap";
+import { } from "react-bootstrap";
 
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -7,7 +7,8 @@ import * as yup from "yup";
 import "./styles.css";
 
 const physicalSchema = yup.object().shape({
-  cpf: yup.string().required("Preenchimento obrigatório")
+  cpf: yup.string().required("Preenchimento obrigatório"),
+  rg: yup.string().required("Preenchimento obrigatório")
 });
 
 class FormPhysicalPerson extends Component {
@@ -58,7 +59,7 @@ class FormPhysicalPerson extends Component {
       .catch(error => {
         console.log(
           "[FormPhysicalPerson][onSubmitPhysicalPerson] There has been a problem: " +
-            error.message
+          error.message
         );
         this.setLoading(false);
       });
@@ -70,7 +71,8 @@ class FormPhysicalPerson extends Component {
       <Formik
         ref={ref => (this.formulario = ref)}
         initialValues={{
-          cpf: ""
+          cpf: "",
+          rg: ""
         }}
         enableReinitialize={true}
         onSubmit={values => this.onSubmitPhysicalPerson(values)}
@@ -81,19 +83,19 @@ class FormPhysicalPerson extends Component {
             values,
             touched,
             errors,
-            dirty,
-            isSubmitting,
+            //dirty,
+            //isSubmitting,
             handleChange,
             handleBlur,
             handleSubmit,
-            handleReset,
+            //handleReset,
             isValid,
-            submitForm
+            //submitForm
           } = props;
           return (
             <form onSubmit={handleSubmit} className="formContainer">
               <div className="row no-gutters">
-                <div className="col-md mr-md-2 mt-2">
+                <div className="col-12 col-lg mt-2">
                   <div className="input-group">
                     <div className="input-group-prepend">
                       <div className="input-group-text">
@@ -118,7 +120,35 @@ class FormPhysicalPerson extends Component {
                   )}
                 </div>
 
-                <div className="col-md mr-md-2 mt-2">
+                <div className="col-12 col-lg ml-lg-2 mt-2">
+                  <div className="input-group">
+                    <div className="input-group-prepend">
+                      <div className="input-group-text">
+                        <span className="fa fa-book"></span>
+                      </div>
+                    </div>
+                    <input
+                      name="rg"
+                      placeholder="Informe o RG"
+                      onChange={handleChange("rg")}
+                      onBlur={handleBlur("rg")}
+                      value={values.rg}
+                      className={
+                        errors.rg && touched.rg
+                          ? "form-control error"
+                          : "form-control"
+                      }
+                    />
+                  </div>
+                  {errors.rg && touched.rg && (
+                    <div className="input-feedback">{errors.rg}</div>
+                  )}
+                </div>
+
+              </div>
+
+              <div className="row no-gutters">
+                <div className="col-md-12 mr-lg-2 mt-2">
                   <button
                     className="btn btn-success btn-block"
                     type="submit"
@@ -128,6 +158,7 @@ class FormPhysicalPerson extends Component {
                   </button>
                 </div>
               </div>
+
             </form>
           );
         }}
